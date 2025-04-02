@@ -2,16 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aniwesh</title>
-    
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css">
-    <link href="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/css/halfmoon.min.css" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script src="https://cdn.plyr.io/3.6.2/plyr.polyfilled.js"></script>
-    
     <style>
         body {
             margin: 0;
@@ -24,6 +16,26 @@
             height: 100vh;
         }
 
+        .telegram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #007BFF, #0044CC);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+        }
+
+        .telegram-btn img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
         .video-container {
             width: 98vw;
             height: 55.25vw;
@@ -34,51 +46,26 @@
             overflow: hidden;
         }
 
-        #player {
+        iframe {
             width: 100%;
             height: 100%;
+            border: none;
             border-radius: 20px;
         }
     </style>
 </head>
-<body class="dark-mode with-custom-scrollbars with-custom-css-scrollbars">
+<body>
+
+    <a href="https://t.me/aniweshstorage" class="telegram-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo">
+        Aniwesh
+    </a>
+
     <div class="video-container">
-        <video id="player" controls preload="metadata" poster="https://www.icecric.news/wp-content/uploads/2024/12/unnamed-3.webp" class="plyr">
-            <source src="https://redx.embedxt.site/index.m3u8" type="application/x-mpegURL">
-        </video>
+        <iframe src="https://iframv3.embedxt.site/iframe/frame.php" allowfullscreen></iframe>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const videoElement = document.querySelector("#player");
-            const videoSource = videoElement.querySelector("source").src;
+    <a href="https://t.me/aniweshstorage" class="telegram-btn">Join Telegram</a>
 
-            if (Hls.isSupported()) {
-                const hls = new Hls({ maxMaxBufferLength: 100 });
-                hls.loadSource(videoSource);
-                hls.attachMedia(videoElement);
-
-                hls.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
-                    const qualities = hls.levels.map(level => level.height);
-                    new Plyr(videoElement, {
-                        quality: {
-                            default: qualities[0],
-                            options: qualities,
-                            forced: true,
-                            onChange: newQuality => {
-                                hls.levels.forEach((level, index) => {
-                                    if (level.height === newQuality) {
-                                        hls.currentLevel = index;
-                                    }
-                                });
-                            }
-                        }
-                    });
-                });
-            } else {
-                new Plyr(videoElement, {});
-            }
-        });
-    </script>
 </body>
 </html>
